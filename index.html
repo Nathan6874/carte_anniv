@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Anniversaire</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #fce4ec;
+            color: #880e4f;
+        }
+        .quiz-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .btn {
+            background-color: #880e4f;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background-color: #ad1457;
+        }
+
+        .top-left-message {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            background-color: #8bc34a;
+            color: #ffffff;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 0.6em; /* Taille plus petite pour les messages */
+        }
+
+        .bottom-right-message {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background-color: #ffc107;
+            color: #212121;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-size: 0.6em; /* Taille plus petite pour les messages */
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2em; /* Ajuster la taille du titre */
+        }
+
+        input {
+            width: 19em;
+            height: 3em;
+            border-radius: 25px;
+            text-align: center;
+            color: #ad1457;
+            border-color: #ad1457;
+            border-style: solid;
+            border-width: 3px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container" id="quiz-container">
+        <h1>Quizz pour mon Anniversaire 🎉</h1>
+        <p>Veuillez entrer votre nom pour commencer :</p>
+        <input type="text" id="user-name" placeholder="Entrez votre nom" />
+        <br><br>
+        <button class="btn" onclick="askRelation()">Continuer</button>
+    </div>
+
+    <script>
+        let userName = '';
+
+        function askRelation() {
+            const nameInput = document.getElementById('user-name');
+            userName = nameInput.value.trim();
+            if (userName === '') {
+                alert('Veuillez entrer votre nom pour continuer.');
+                return;
+            }
+
+            const quizContainer = document.getElementById('quiz-container');
+            quizContainer.innerHTML = `
+                <h1 style="text-transform: uppercase;">Bonjour, ${userName} ! 🎂</h1>
+                <p>Êtes-vous un membre de la famille ou un ami ?</p>
+                <button class="btn" onclick="askGender('Famille')">Famille</button>
+                <button class="btn" onclick="askGender('Ami')">Ami</button>
+            `;
+        }
+
+        function askGender(relation) {
+            const quizContainer = document.getElementById('quiz-container');
+            quizContainer.innerHTML = `
+                <h1>Quel est votre sexe ?</h1>
+                <button class="btn" onclick="askGift('${relation}', 'Homme')">Homme</button>
+                <button class="btn" onclick="askGift('${relation}', 'Femme')">Femme</button>
+            `;
+        }
+
+        function askGift(relation, gender) {
+            const quizContainer = document.getElementById('quiz-container');
+            quizContainer.innerHTML = `
+                <h1>Apportez-vous un cadeau ?</h1>
+                <button class="btn" onclick="showMessage('oui')">Oui</button>
+                <button class="btn" onclick="showMessage('non')">Non</button>
+            `;
+        }
+
+        function showMessage(hasGift) {
+            const quizContainer = document.getElementById('quiz-container');
+            if (hasGift === 'oui') {
+                quizContainer.innerHTML = `
+                    <h1>${userName} regarde en haut à gauche</h1>
+                    <img src="pepe.JPG" alt="Image d'illustration" style="max-width: 100%; height: auto; border-radius: 10px;" />
+                `;
+                displaySpecialMessages();
+            } else {
+                quizContainer.innerHTML = `
+                    <h1>Ahyyy ${userName} genre</h1>
+                    <p>Tu n'as pas caudeau, tu veux venir faire quoi dans anniversaire là ? 
+                        Faut rester chez toi.</p>
+                `;
+            }
+        }
+
+        function displaySpecialMessages() {
+            const topLeftMessage = document.createElement('div');
+            topLeftMessage.className = 'top-left-message';
+            topLeftMessage.innerText = "Regard en bas à droite";
+
+            const bottomRightMessage = document.createElement('div');
+            bottomRightMessage.className = 'bottom-right-message';
+            bottomRightMessage.innerText = "Donne moi 2000 pardon";
+
+            document.body.appendChild(topLeftMessage);
+            document.body.appendChild(bottomRightMessage);
+
+            // Supprimer les messages après 10 secondes
+            // setTimeout(() => {
+            //     topRightMessage.remove();
+            //     bottomLeftMessage.remove();
+            // }, 10000);
+        }
+    </script>
+</body>
+</html>
